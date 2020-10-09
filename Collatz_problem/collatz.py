@@ -16,11 +16,13 @@ def simple_collatz_rec(n):
 	return simple_collatz_rec_inner(n, 0)
 
 
-def simple_collatz(n):
+def simple_collatz(n, done_set):
 	if n <= 0:
 		return -1
 	count = 1
 	while n != 1:
+		if n in done_set:
+			return n, 0
 		count += 1
 		if n % 2 == 0:
 			n = n//2
@@ -30,6 +32,10 @@ def simple_collatz(n):
 
 
 if __name__ == '__main__':
-	for i in range(1, 1000000):
+	done_set = set([])
+	i = 0
+	while True:
+		i += 1
 		start = time.time()
-		print(i, simple_collatz_rec(i), start-time.time())
+		print(i, simple_collatz(i, done_set), start-time.time())
+		done_set.add(i)
